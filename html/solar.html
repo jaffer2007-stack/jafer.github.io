@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Solar System | NOVA ZENITH</title>
+    <link rel="stylesheet" href="../style/soler-style.css">
+    <!--This line imports the Google model-viewer API library for rendering 3D models-->
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+</head>
+<body>
+
+    <!-- STARFIELD CANVAS -->
+    <canvas id="starfield"></canvas>
+
+    <!-- NAVIGATION BAR -->
+    <nav>
+        <div class="logo"> NOVA ZENITH </div>
+        <div class="nav-links">
+            <a href="index.html">Planets</a>
+            <a href="html/solar.html">Solar System</a>
+        </div>
+    </nav>
+<!-- The universe container that holds the sun and the planets, with CSS animations to create an orbiting effect -->
+    <div id="universe">
+        <div class="sun"></div>
+    </div>
+<!--External JavaScript file for handling the solar system animation and interactions-->
+    <script src="../javascript/soler-script.js"></script>
+</body>
+</html>

@@ -1,0 +1,249 @@
+/*
+    style.css - This file contains all the styling for the space explorer web application, including layout, typography, animations, and responsive design elements.
+    It defines the visual appearance of the starry background, navigation bar, hero section, and detailed information panel for each planet.
+    The CSS also includes animations for the hero text and transitions for interactive elements like buttons and model viewer.
+*/
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap');
+
+/*Global styles which apply to the whole application*/
+body { 
+    margin: 0; 
+    background-color: #050505; 
+    color: white; 
+    font-family: 'Inter', sans-serif; 
+    overflow: hidden;
+    height: 100vh;
+}
+
+/*Style for the #starfield canvas which covers the whole view port and acts as the animated starry background*/
+#starfield {
+    position: fixed; top: 0;
+    left: 0; width: 100%;
+    height: 100%; z-index: -1;
+    pointer-events: none;
+    background: radial-gradient(circle at center, #0a0a1a 0%, #050505 100%);
+    transition: opacity 0.5s ease;
+}
+
+/*The body::before pseudo-element creates a subtle radial gradient overlay on top of the starfield*/
+body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: radial-gradient(circle at center, transparent 0%, #0000004d 100%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/*Additional styles for the universe background layer which can be used for parallax effects*/
+nav {
+    position: absolute; top: 0; 
+    width: 100%; padding: 40px 60px;
+    display: flex; justify-content: space-between; 
+    align-items: center; z-index: 100;
+    box-sizing: border-box; animation: slideDown 0.8s ease-out;
+}
+
+/*Navigation bar styles including the logo and navigation links with hover effects*/
+.logo { 
+    font-weight: 700; font-size: 22px; letter-spacing: 1px; 
+    color: white;
+}
+
+/*Navigation links styled to be uppercase with spacing and a hover effect that increases letter spacing and shows an underline gradient*/
+.nav-links { display: flex; gap: 40px; align-items: center; }
+.nav-links a { 
+    color: white; text-decoration: none; 
+    font-size: 13px; text-transform: uppercase; 
+    letter-spacing: 1px; opacity: 0.7; 
+    transition: all 0.3s ease; position: relative;
+}
+
+.nav-links a:hover { opacity: 1; letter-spacing: 2px; color: #c8eaf3; }
+.nav-links a::after {
+    content: ''; position: absolute; 
+    bottom: -5px; left: 0;
+    width: 0; height: 1px; background: linear-gradient(90deg, #88ccff, #7fc8e6);
+    transition: width 0.3s ease;
+}
+.nav-links a:hover::after { width: 100%; }
+
+/*The .side-label class styles the vertical navigation labels on the sides of the screen, with hover effects that increase opacity and scale*/
+.side-label { 
+    position: absolute; top: 50%; font-size: 10px; 
+    letter-spacing: 4px; opacity: 0.4; 
+    writing-mode: vertical-rl; transform: translateY(-50%);
+    cursor: pointer; z-index: 20; 
+    transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    padding: 20px; background: #0000004d; 
+    backdrop-filter: blur(4px); border-radius: 30px;
+}
+.side-label:hover { opacity: 1; color: #00ccff; transform: translateY(-50%) scale(1.1); letter-spacing: 6px; }
+.left { left: 40px; }
+.right { right: 40px; transform: translateY(-50%) rotate(180deg); }
+.right:hover { transform: translateY(-50%) rotate(180deg) scale(1.1); }
+
+/*General container and utility classes for layout and spacing, as well as the custom cursor styling*/
+.hero {
+    position: relative; height: 85vh;
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+    text-align: center; z-index: 5; pointer-events: none;
+    transition: transform 1s ease, opacity 0.8s ease;
+}
+
+/*The .reveal-mask class is used to create a masked reveal effect for the hero text*/
+.reveal-mask { overflow: hidden; display: block; padding-bottom: 5px; }
+
+/*The .subtitle class styles the subtitle text with specific letter spacing, font size, and opacity*/
+.subtitle {  
+    letter-spacing: 8px; font-size: 12px;
+    opacity: 0.5; margin-bottom: 10px; 
+    display: block; transform: translateY(100%);
+}
+
+/* header and description styles for the hero section*/
+h1 { 
+    font-size: clamp(50px, 10vw, 110px); margin: 0; 
+    letter-spacing: 20px; font-weight: 300; 
+    text-indent: 20px; background: linear-gradient(135deg, #ffffff, #ffffff);
+    -webkit-background-clip: text; background-clip: text; 
+    color: transparent; transform: translateY(100%);
+}
+
+/*The .description class styles specific font size, line height, and spacing*/
+.description { 
+    max-width: 550px; margin: 25px auto; 
+    font-size: 14px; line-height: 1.8; 
+    opacity: 0.6; transform: translateY(120%);
+}
+
+/* The .get-started class styles the main call-to-action button*/
+.get-started {
+    pointer-events: all; border: 1px solid white; 
+    background: none; color: white;
+    padding: 14px 45px; border-radius: 30px; 
+    cursor: pointer; font-size: 12px; letter-spacing: 2px;
+    transition: all 0.4s ease; opacity: 0;
+    transform: translateY(20px);
+}
+
+/*Hover effect for the .get-started button that changes background and text color, adds a shadow, and slightly scales the button*/
+.get-started:hover {
+   background: white; color: black;
+  box-shadow: 0 0 20px #ffffff4d; transform: scale(1.05); }
+
+/*The .animate class is used to trigger the entrance animations for the hero text and button when the page loads*/
+.animate .subtitle { animation: slideUpReveal 0.8s cubic-bezier(0.2, 1, 0.3, 1) forwards; }
+.animate h1 { animation: slideUpReveal 1s cubic-bezier(0.2, 1, 0.3, 1) 0.1s forwards; }
+.animate .description { animation: slideUpReveal 1s cubic-bezier(0.2, 1, 0.3, 1) 0.2s forwards; }
+.animate .get-started { animation: fadeIn 0.8s ease forwards 0.5s; }
+
+/*The .@keyframes adds animation*/
+@keyframes slideUpReveal {
+    from { transform: translateY(110%); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+@keyframes fadeIn { to { opacity: 1; transform: translateY(0); } }
+@keyframes slideDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
+
+/*model-viewer is used for displaying 3D models*/
+model-viewer {
+    position: absolute; bottom: -355px; width: 100%; height: 85%;
+    left: 50%; transform: translateX(-50%); z-index: 1;
+    --poster-color: transparent;
+    transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.model-fade { opacity: 0; }
+
+/* the .detailed-view class is added to the body when a user clicks "LEARN MORE", which triggers the transition to the detailed planet view and changes the layout and visibility of elements accordingly*/
+.detailed-view model-viewer {
+    left: 70%; bottom: -30px;
+    height: 100%; width: 50%;
+    transform: translateX(-50%) scale(0.8);
+}
+
+/*When the .detailed-view class is active, the hero section is moved up and faded out to make way for the detailed information panel and the 3D model viewer*/
+.detailed-view .hero {
+    transform: translateY(-100vh);
+    transform: translateY(-100vh);
+    opacity: 0; pointer-events: none;
+}
+
+/*Styles for the detailed information panel that appears when a user clicks "LEARN MORE"*/
+.details-panel {
+    position: absolute; top: 50%;
+    left: 10%; transform: translateY(-50%);
+    width: 35%; z-index: 10;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.2s ease, left 0.2s ease; 
+}
+
+/*.detailed-view .details-panel styles that make the panel visible and slide it in from the left when the detailed view is active*/
+.detailed-view .details-panel {
+    opacity: 1; pointer-events: all;
+    left: 12%; transition: opacity 0.8s ease 0.4s, left 0.8s ease 0.4s;
+}
+
+/*.details-panel .tagline styles the small uppercase tagline above the planet name in the detailed view*/           
+.details-panel .tagline {
+    color: #88ccff; text-transform: uppercase;
+    font-size: 12px; letter-spacing: 4px;
+    margin-bottom: 10px; display: block;
+}
+
+/*details-panel h2 styles the main planet name in the detailed view */
+.details-panel h2 {
+    font-size: 60px; margin: 0 0 20px 0;
+    font-weight: 300; letter-spacing: 10px;
+}
+
+/*.details-panel p styles the long description text in the detailed view*/
+.details-panel p {
+    font-size: 15px; line-height: 1.8;
+    opacity: 0.7; margin-bottom: 30px;
+}
+
+/*.panel-actions` styles the container for the action buttons in the detailed view, arranging them horizontally with spacing*/
+.panel-actions {
+    display: flex; gap: 15px;
+}
+
+/*The .back-btn and .learn-more-btn styles define the appearance of the buttons in the detailed view, including their background, border, font, and hover effects*/
+.back-btn, .learn-more-btn {
+    background: none; border: 1px solid #ffffff33;
+    color: white; padding: 10px 30px;
+    border-radius: 20px; cursor: pointer;
+    font-size: 11px; letter-spacing: 2px;
+    transition: 0.3s; text-decoration: none;
+    display: inline-block;
+}
+
+.learn-more-btn {
+    background: #88ccff1a;
+    border-color: #8accff66;
+}
+
+.back-btn:hover, .learn-more-btn:hover { 
+    border-color: white; 
+    background: #ffffff1a; 
+}
+
+/*The #toggle-stars button is styled to be a small, semi-transparent button in the bottom left corner that allows users to switch between star modes*/
+#toggle-stars {
+    position: absolute; bottom: 30px;
+    left: 40px; z-index: 100;
+    background: #0000004d; border: 1px solid #ffffff33;
+    color: #ffffff99; padding: 8px 16px;
+    border-radius: 20px; font-size: 10px;
+    letter-spacing: 2px; cursor: pointer;
+    backdrop-filter: blur(5px); transition: all 0.3s ease;
+}
+
+/*Hover effect for the #toggle-stars button that changes color*/
+#toggle-stars:hover {
+    color: #88ccff;
+    border-color: #88ccff;
+}

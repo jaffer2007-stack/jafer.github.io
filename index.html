@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--This title displays the name of the planetary exploration web application-->
+    <title>NOVA ZENITH | Planet Explorer</title>
+    <link rel="stylesheet" href="style/style.css">
+    <!--This line imports the Google model-viewer API library for rendering 3D models-->
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+</head>
+<body>
+
+    <!--A canvas object used for rendering the interactive animated background of the starry sky-->
+    <canvas id="starfield"></canvas>
+
+    <!--This is an active button that enables hiding and displaying the background stars-->
+    <button id="toggle-stars">HIDE STARS</button>
+
+    <nav>
+        <div class="logo">NOVA ZENITH</div>
+        <div class="nav-links">
+             <!--Links for navigation inside the space explorer-->
+            <a href="#">Planets</a>
+            <!--Link to the solar system view-->
+            <a href="html/solar.html">Solar System</a>
+        </div>
+    </nav>
+
+    <!--Navigation buttons that will navigate the user to model view pages of different planets-->
+    <div class="side-label left" id="prev-btn">VENUS</div>
+    <div class="side-label right" id="next-btn">MARS</div>
+
+    <!--Hero section containing the animation and the start button-->
+    <div class="hero animate" id="hero-container">
+        <div class="reveal-mask"><span class="subtitle">PLANET</span></div>
+        <div class="reveal-mask"><h1 id="planet-name">EARTH</h1></div>
+        <div class="reveal-mask">
+            <p class="description" id="planet-desc"> Learn more about this fascinating miracle that we call our home, Planet Earth.</p>
+        </div>
+        <button class="get-started" id="start-btn">GET STARTED</button>
+    </div>
+
+    <!--Panel that gives users detailed information about the selected planet after clicking "LEARN MORE"-->
+    <div class="details-panel" id="details-panel">
+        <span class="tagline" id="det-tagline">THE BLUE PLANET</span>
+        <h2 id="det-name">EARTH</h2>
+        <p id="det-long-desc">Earth is the third planet from the Sun and the only astronomical object known to harbor life.</p>
+        <div class="panel-actions">
+            <!--Buttons allowing the user to return to the home page or learn more-->
+            <button class="back-btn" id="back-btn">GO BACK</button>
+            <button href="html/timeline.html" class="learn-more-btn" id="learn-more-btn">LEARN MORE</button>
+        </div>
+    </div>
+
+    <!--3D model viewer for displaying planetary models that users can interact with-->
+    <model-viewer 
+        id="planet-model" 
+        src="image/earth (4).glb" 
+        auto-rotate rotation-speed="0.5" 
+        camera-controls disable-zoom shadow-intensity="1" interaction-prompt="none">
+    </model-viewer>
+
+    <!--External JavaScript file for handling the application logic-->
+    <script src="javascript/script.js"></script>
+</body>
+</html>
